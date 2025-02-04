@@ -1,0 +1,28 @@
+
+.active {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: red;
+    position: relative;
+    /* Adding position relative for absolute positioning */
+  }
+  
+  .active::before {
+    position: absolute;
+    content: "";
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    border: 4px solid tomato;
+    border-radius: 50%;
+    animation: animate 2s linear infinite;
+  }
+
+  @keyframes animate {
+    100% {
+      transform: scale(4);
+      opacity: 0;
+    }
+  }
