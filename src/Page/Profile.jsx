@@ -5,6 +5,8 @@ import Header from "../Components/Header";
 import { Button } from "antd";
 import { useSendLocationMutation } from "../app/fetchers/location/locationApi";
 import { useSelector } from "react-redux";
+import markerIconPng from 'leaflet/dist/images/marker-icon.png';
+import markerShadowPng from 'leaflet/dist/images/marker-shadow.png';
 
 const App = () => {
   const [error, setError] = useState(null);
@@ -102,8 +104,17 @@ const App = () => {
         map
       );
 
+      const markerIcon = L.icon({
+                          iconUrl: markerIconPng,
+                          shadowUrl: markerShadowPng,
+                          iconSize: [25, 41], // Default Leaflet icon size
+                          iconAnchor: [12, 41],
+                          popupAnchor: [1, -34],
+                          shadowSize: [41, 41],
+                      });
+
       // Add marker for the user's location
-      L.marker([latitude, longitude])
+      L.marker([latitude, longitude], { icon: markerIcon })
         .addTo(map)
         .bindPopup("You are here")
         .openPopup();
