@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import { useGetSingleUserLocationInformationQuery } from '../app/fetchers/location/locationApi';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+import markerIconPng from 'leaflet/dist/images/marker-icon.png';
+import markerShadowPng from 'leaflet/dist/images/marker-shadow.png';
 
 function ViewMap() {
     const param = useParams();
@@ -27,14 +29,23 @@ function ViewMap() {
                         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
                 }).addTo(mapInstanceRef.current)
 
+                const markerIcon = L.icon({
+                    iconUrl: markerIconPng,
+                    shadowUrl: markerShadowPng,
+                    iconSize: [25, 41], // Default Leaflet icon size
+                    iconAnchor: [12, 41],
+                    popupAnchor: [1, -34],
+                    shadowSize: [41, 41],
+                });
+
                 // Add marker
-                L.marker([latitude, longitude])
+                L.marker([latitude, longitude], { icon: markerIcon })
                     .addTo(mapInstanceRef.current)
                     .bindPopup('User Location')
                     .openPopup();
             }
         }
-    }, [data]);
+    }, [data, mapRef]);
 
     if (isLoading) return <p>Loading...</p>;
     if (isError) return <p>Error loading location data.</p>;
